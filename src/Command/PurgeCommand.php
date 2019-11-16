@@ -36,7 +36,7 @@ class PurgeCommand extends Command
                 InputOption::VALUE_REQUIRED,
                 'How old should a snapshot be (in days) to be purged?',
                 3
-            );;
+            );
     }
 
     /**
