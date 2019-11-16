@@ -1,0 +1,13 @@
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Creating btrfs snapshot before transaction...
+When = PreTransaction
+Exec = /usr/bin/snapman snapshot --purge-older-than=3
+NeedsTargets
+AbortOnFail
