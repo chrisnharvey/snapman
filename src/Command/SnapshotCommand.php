@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 class SnapshotCommand extends Command
 {
@@ -36,6 +37,13 @@ class SnapshotCommand extends Command
                 'How old should a snapshot be (in days) to be purged?',
                 null
             )
+            ->addOption(
+                'skip-grub-config',
+                null,
+                InputOption::VALUE_NONE,
+                "Don't generate grub config after creating snapshot",
+                null
+            )
             ->setDescription('Take a snapshot of the current system state');
     }
 
@@ -55,5 +63,15 @@ class SnapshotCommand extends Command
         $snapshot = Snapshot::create();
 
         $output->writeln("<fg=green>Snapshot created at {$snapshot->getPath()}</>");
+
+        if (! $input->getOption('skip-grub-config')) {
+            $output->writeln('Generating grub config...');
+
+            $process = new Process(['grub-mkconfig', '-o', '/boot/grub/grub.cfg']);
+
+            $process->mustRun();
+
+            $output->writeln('<fg=green>Grub config generated successfully</>');
+        }
     }
 }
