@@ -2,7 +2,7 @@
 
 pkgname=snapman
 _pkgname=snapman
-pkgver=6.12d0606
+pkgver=10.17de613
 pkgrel=1
 pkgdesc="Automatically create Btrfs snapshots before any Pacman transaction and automatically purge old snapshots."
 arch=("x86_64")
