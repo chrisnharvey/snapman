@@ -24,12 +24,12 @@ class SnapshotFinder
      *
      * @return Collection
      */
-    public function all(): Collection
+    public function findIn(string $snapshotPath): Collection
     {
         $snapshots = $this->finder
             ->directories()
             ->depth(0)
-            ->in('/snapshots');
+            ->in($snapshotPath);
 
         return collect($snapshots)->mapInto(Snapshot::class);
     }

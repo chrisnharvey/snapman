@@ -5,6 +5,7 @@ namespace App\Command;
 use App\SnapshotFinder;
 use Encore\Command;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,6 +37,12 @@ class PurgeCommand extends Command
                 InputOption::VALUE_REQUIRED,
                 'How old should a snapshot be (in days) to be purged?',
                 3
+            )
+            ->addArgument(
+                'snapshot-subvolume-path',
+                InputArgument::OPTIONAL,
+                "Btrfs snapshot subvolume path",
+                '/snapshots'
             );
     }
 
@@ -44,7 +51,9 @@ class PurgeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $snapshots = $this->snapshots->all()->filter(function ($snapshot) use ($input) {
+        $snapshots = $this->snapshots->findIn(
+            $input->getArgument('snapshot-subvolume-path')
+        )->filter(function ($snapshot) use ($input) {
             return $snapshot->isOlderThanDays(
                 $input->getOption('older-than')
             );

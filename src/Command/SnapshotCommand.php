@@ -6,6 +6,7 @@ use App\Snapshot;
 use App\SnapshotFinder;
 use Encore\Command;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -44,6 +45,18 @@ class SnapshotCommand extends Command
                 "Don't generate grub config after creating snapshot",
                 null
             )
+            ->addArgument(
+                'subvolume-path',
+                InputArgument::OPTIONAL,
+                "Btrfs mount point to create the snapshot on",
+                '/'
+            )
+            ->addArgument(
+                'snapshot-subvolume-path',
+                InputArgument::OPTIONAL,
+                "Btrfs snapshot subvolume path",
+                '/snapshots'
+            )
             ->setDescription('Take a snapshot of the current system state');
     }
 
@@ -56,11 +69,15 @@ class SnapshotCommand extends Command
             $command = $this->getApplication()->find('purge');
 
             $command->run(new ArrayInput([
+                'snapshot-subvolume-path' => $input->getArgument('snapshot-subvolume-path'),
                 '--older-than' => $purgeOlderThan
             ]), $output);
         }
 
-        $snapshot = Snapshot::create();
+        $snapshot = Snapshot::createTimestampedSnapshot(
+            $input->getArgument('subvolume-path'),
+            $input->getArgument('snapshot-subvolume-path')
+        );
 
         $output->writeln("<fg=green>Snapshot created at {$snapshot->getPath()}</>");
 

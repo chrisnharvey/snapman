@@ -21,17 +21,21 @@ class Snapshot
         $this->timestamp = Carbon::createFromFormat('Y-m-d_H:i:s', $file->getBasename());
     }
 
+    public function createTimestampedSnapshot(string $subvolumePath, string $snapshotPath)
+    {
+        $date = date('Y-m-d_H:i:s');
+
+        return static::create($subvolumePath, "{$snapshotPath}/{$date}");
+    }
+
     /**
      * Create snapshot
      *
      * @return self
      */
-    public static function create(): self
+    public static function create(string $subvolumePath, string $snapshotPath): self
     {
-        $date = date('Y-m-d_H:i:s');
-        $snapshotPath = "/snapshots/{$date}";
-
-        $process = new Process(['btrfs', 'subvolume', 'snapshot', '/', $snapshotPath]);
+        $process = new Process(['btrfs', 'subvolume', 'snapshot', $subvolumePath, $snapshotPath]);
 
         $process->mustRun();
 
