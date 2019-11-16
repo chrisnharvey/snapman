@@ -1,0 +1,17 @@
+{
+    "require": {
+        "chrisnharvey/encorephp": "dev-master",
+        "nesbot/carbon": "^2.26",
+        "symfony/process": "^4.3",
+        "symfony/finder": "^4.3",
+        "tightenco/collect": "^6.5"
+    },
+    "require-dev": {
+        "chrisnharvey/encorephp-dev": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
