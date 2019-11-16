@@ -1071,12 +1071,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chrisnharvey/encorephp-dev.git",
-                "reference": "b454dbdb97a00c9c246e05b2da4dacf36e556108"
+                "reference": "7fe8990cb5efa23594d9427165e24995555447b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chrisnharvey/encorephp-dev/zipball/b454dbdb97a00c9c246e05b2da4dacf36e556108",
-                "reference": "b454dbdb97a00c9c246e05b2da4dacf36e556108",
+                "url": "https://api.github.com/repos/chrisnharvey/encorephp-dev/zipball/7fe8990cb5efa23594d9427165e24995555447b0",
+                "reference": "7fe8990cb5efa23594d9427165e24995555447b0",
                 "shasum": ""
             },
             "require": {
@@ -1102,7 +1102,7 @@
                 }
             ],
             "description": "EncorePHP dev tools",
-            "time": "2019-11-15T23:20:59+00:00"
+            "time": "2019-11-16T21:18:49+00:00"
         }
     ],
     "aliases": [],
