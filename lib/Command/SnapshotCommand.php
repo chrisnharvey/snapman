@@ -68,10 +68,16 @@ class SnapshotCommand extends Command
         if ($purgeOlderThan = $input->getOption('purge-older-than')) {
             $command = $this->getApplication()->find('purge');
 
-            $command->run(new ArrayInput([
+            $purgeInput = new ArrayInput([
                 'snapshot-subvolume-path' => $input->getArgument('snapshot-subvolume-path'),
                 '--older-than' => $purgeOlderThan
-            ]), $output);
+            ]);
+
+            $purgeInput->setInteractive(
+                ! $input->getOption('no-interaction')
+            );
+
+            $command->run($purgeInput, $output);
         }
 
         $snapshot = Snapshot::createTimestampedSnapshot(
