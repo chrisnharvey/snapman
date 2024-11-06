@@ -2,7 +2,7 @@
     "require": {
         "chrisnharvey/encorephp": "dev-master",
         "nesbot/carbon": "^2.26",
-        "symfony/process": "^4.3",
+        "symfony/process": "^5.4",
         "symfony/finder": "^4.3",
         "tightenco/collect": "^6.5"
     },
